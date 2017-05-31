@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Item</title>
+    {% load staticfiles %}
+	  <link rel="stylesheet" href="{% static 'lists/css/index_style.css' %}">
+
+</head>
+<body>
+    <div id="header">
+        <div id="welcome">
+        </div>
+        <div id="navigation">
+            <a href="{% url 'lists:index' %}"class="headurl">Home</a>
+            <a href="{% url 'lists:logout' %}"class="headurl">Logout</a>
+        </div>
+        <hr>
+    </div>
+    <h1>Create a New Wish List Item</h1>
+    <form action="{% url 'lists:add_product' %}" method="POST">
+        {% csrf_token %}
+        <label for="product">
+            Item/Product: 
+            <input type="text" name="product">
+        </label>
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <input type="submit" name="submit" value="Add">
+    </form>
+</body>
+</html>

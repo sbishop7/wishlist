@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ product.product }}</title>
+    {% load staticfiles %}
+	  <link rel="stylesheet" href="{% static 'lists/css/index_style.css' %}">
+
+</head>
+<body>
+    <div id="header">
+        <div id="welcome">
+        </div>
+        <div id="navigation">
+            <a href="{% url 'lists:index' %}"class="headurl">Home</a>
+            <a href="{% url 'lists:logout' %}"class="headurl">Logout</a>
+        </div>
+        <hr>
+    </div>
+    <h1>{{ product.product }}</h1>
+    <p>Users who added this product/item under their wish list:</p>
+    {% for user in other_users %}
+        <ul>
+            <li>{{ user.name }}</li>
+        </ul>
+    {% endfor %}
+</body>
+</html>

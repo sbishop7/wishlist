@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Wish List</title>
+    {% load staticfiles %}
+	  <link rel="stylesheet" href="{% static 'lists/css/index_style.css' %}">
+
+</head>
+<body>
+    <div id="header">
+        <div id="welcome">
+            <h2>Hello, {{ user.name }}!</h2>
+        </div>
+        <div id="navigation">
+            <a href="{% url 'lists:logout' %}"class="headurl">Logout</a>
+        </div>
+        <hr>
+    </div>
+    Your Wish List:</br>
+    <table>
+        <tr class="header">
+            <th>Item</th>
+            <th>Added by</th>
+            <th>Date Added</th>
+            <th>Action</th>
+        </tr>
+        {% for item in user_wishlist %}
+            <tr>
+                <td><a href='{% url "lists:wish_items" id=item.id %}'>{{ item.product }}</a></td>
+                <td>{{ item.creator.name }}</td>
+                <td>{{ item.created_at|date:"F j, Y" }}</td>
+                <td>
+                    {% if user == item.creator %}
+                    <a href='{% url "lists:delete_product" id=item.id %}'> Delete</a>
+                    {% else %}
+                        <a href='{% url "lists:remove_wish" id=item.id %}'> Remove from my Wishlist</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    Other Users' Wish List:</br>
+    <table>
+        <tr class="header">
+            <th>Item</th>
+            <th>Added by</th>
+            <th>Date Added</th>
+            <th>Action</th>
+        </tr>
+        {% for item in other_wishlist %}
+            <tr>
+                <td>{{ item.product }}</td>
+                <td>{{ item.creator.name }}</td>
+                <td>{{ item.created_at|date:"F j, Y" }}</td>
+                <td>
+                    <a href='{% url "lists:add_wish" id=item.id %}'> Add to my Wishlist</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p></p><a href="{% url 'lists:create' %}"class="headurl">Add Item</a></p>
+</body>
+</html>
